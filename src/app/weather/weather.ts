@@ -1,7 +1,6 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CommaExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-weather',
@@ -11,7 +10,8 @@ import { CommaExpr } from '@angular/compiler';
 })
 export class Weather implements OnInit{
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.locationInputValue = 'Lafayette';
+    this.onSubmit();
   }
 
   private readonly WEATHER_CODES: {
@@ -259,7 +259,7 @@ export class Weather implements OnInit{
 
       if(lat === 0 && lon === 0 && name === "Unknown"){return null}
       
-      const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,is_day,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min`);
+      const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,is_day,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`);
       const data = await res.json();
       return{
         name,
@@ -287,17 +287,17 @@ export class Weather implements OnInit{
     return forecasts;
   }
 
-  private ICON_BASE_PATH = 'assets/icons/';
+  private ICON_BASE_PATH = '/assets/icons';
 
   private getWeatherIconSrc(code: number, is_day: number): string {
     const weatherInfo = this.WEATHER_CODES[code];
     if(weatherInfo){
       const iconFileName = is_day === 1 ? weatherInfo.icons.day : weatherInfo.icons.night;
-      return `${this.ICON_BASE_PATH}${iconFileName}`;
+      return `${this.ICON_BASE_PATH}/${iconFileName}`;
     }
 
     console.warn(`Weather code ${code} not found for icon lookup`);
-    return `${this.ICON_BASE_PATH}default.svg`;
+    return `${this.ICON_BASE_PATH}overcast.svg`;
   }
 
   private getWeatherConditionName(code: number, is_day: number): string {
@@ -312,8 +312,6 @@ export class Weather implements OnInit{
 
   //Called when the form is submitted
   async onSubmit(){
-    this.weatherDetails.nativeElement.classList.remove("active");
-    this.dailyForecastElems.nativeElement.innerHTML = "";
 
     const weather = await this.getWeather(this.locationInputValue);
 
@@ -327,7 +325,7 @@ export class Weather implements OnInit{
       this.windSpeedText = wind_speed_10m;
 
       this.weatherConName = this.getWeatherConditionName(weather_code, is_day);
-      this.weatherConIconSrc = this.getWeatherConditionName(weather_code, is_day);
+      this.weatherConIconSrc = this.getWeatherIconSrc(weather_code, is_day);
 
       this.dailyForecasts = this.processDailyForecasts(daily_weather_codes, temperature_2m_max, temperature_2m_min, time);
     }

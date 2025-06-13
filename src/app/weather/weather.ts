@@ -230,8 +230,11 @@ export class Weather implements OnInit{
   weatherConIconSrc: string = '';
   weatherConName: string = '';
   tempText: number | null = null;
+  feelsLikeText: number | null = null;
   humidityText: number | null = null;
   windSpeedText: number | null = null;
+  meanChanceOfRain: number | null = null;
+  chanceOfRain: number | null = null;
 
   dailyForecasts: any[] = []; //need to populate
 
@@ -259,7 +262,7 @@ export class Weather implements OnInit{
 
       if(lat === 0 && lon === 0 && name === "Unknown"){return null}
       
-      const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,is_day,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`);
+      const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,precipitation_probability,relative_humidity_2m,is_day,weather_code,wind_speed_10m&hourly=weather_code,temperature_2m,precipitation_probability,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_mean&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`);
       const data = await res.json();
       return{
         name,
@@ -272,7 +275,7 @@ export class Weather implements OnInit{
     }
   }
 
-  private processDailyForecasts(codes: number[], maxTemps: number[], minTemps: number[], times: string[]): any[]{
+  private processDailyForecasts(codes: number[], maxTemps: number[], minTemps: number[], times: string[], rainChance: number[]): any[]{
     const forecasts = [];
     for(let i = 0; i < times.length; i++){
       forecasts.push({
@@ -280,7 +283,8 @@ export class Weather implements OnInit{
         maxTemp: maxTemps[i],
         minTemp: minTemps[i],
         weatherCode: codes[i],
-        conditionName: this.getWeatherConditionName(codes[1], 1),
+        rainChance: rainChance[i],
+        conditionName: this.getWeatherConditionName(codes[i], 1),
         iconSrc: this.getWeatherIconSrc(codes[i], 1)
       });
     }
@@ -316,24 +320,29 @@ export class Weather implements OnInit{
     const weather = await this.getWeather(this.locationInputValue);
 
     if(weather){ //Checks if weather was successfully retreived
-      const {temperature_2m, relative_humidity_2m, is_day, weather_code, wind_speed_10m} = weather.current;
-      const {weather_code: daily_weather_codes, temperature_2m_max, temperature_2m_min, time} = weather.daily;
+      const {temperature_2m, apparent_temperature, precipitation_probability, relative_humidity_2m, is_day, weather_code, wind_speed_10m} = weather.current;
+      const {weather_code: daily_weather_codes, temperature_2m_max, temperature_2m_min, precipitation_probability_mean, time} = weather.daily;
 
       this.locationText = weather.name;
       this.tempText = temperature_2m;
+      this.feelsLikeText = apparent_temperature;
       this.humidityText = relative_humidity_2m;
       this.windSpeedText = wind_speed_10m;
+      this.meanChanceOfRain = precipitation_probability_mean;
+      this.chanceOfRain = precipitation_probability
 
       this.weatherConName = this.getWeatherConditionName(weather_code, is_day);
       this.weatherConIconSrc = this.getWeatherIconSrc(weather_code, is_day);
 
-      this.dailyForecasts = this.processDailyForecasts(daily_weather_codes, temperature_2m_max, temperature_2m_min, time);
+      this.dailyForecasts = this.processDailyForecasts(daily_weather_codes, temperature_2m_max, temperature_2m_min, time, precipitation_probability_mean);
     }
     else{
       this.locationText = "Locaiton not Found";
       this.tempText = null;
       this.humidityText = null;
       this.windSpeedText = null;
+      this.meanChanceOfRain = null;
+      this.chanceOfRain = null;
       this.weatherConName = "";
       this.weatherConIconSrc = "";
       this.dailyForecasts = [];

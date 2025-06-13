@@ -14,13 +14,16 @@
       <div class="temperature">
         <img [src]="weatherConIconSrc" alt="weather-icon" width="150" height="150" id="weather-condition-icon"/>
         <p class="temperatureTxt">
-          <span id="temperature">{{ tempText }}</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16.5 5c1.55 0 3 .47 4.19 1.28l-1.16 2.89A4.47 4.47 0 0 0 16.5 8C14 8 12 10 12 12.5s2 4.5 4.5 4.5c1.03 0 1.97-.34 2.73-.92l1.14 2.85A7.47 7.47 0 0 1 16.5 20A7.5 7.5 0 0 1 9 12.5A7.5 7.5 0 0 1 16.5 5M6 3a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m0 2a1 1 0 0 0-1 1a1 1 0 0 0 1 1a1 1 0 0 0 1-1a1 1 0 0 0-1-1"/></svg>
+          <span id="temperature">{{ tempText }}°F</span>
         </p>
         <p id="weather-condition-name">{{ weatherConName }}</p>
+        <p>Feels like: {{feelsLikeText}}</p>
+        <img src="assets/icons/humidity.svg" alt="rainChance" width="64" height="64"><span id="humidity">{{ chanceOfRain }}%</span>
+
       </div>
       <ul class="info">
-        <li><img src="assets/icons/humidity.svg" alt="humidity" width="64" height="64"><span id="humidity">{{ humidityText }}</span>%</li>
-        <li><img src="assets/icons/wind.svg" alt="wind-speed" width="64" height="64"><span id="wind-speed">{{ windSpeedText }}</span>mph</li>
+        <li><span id="humidity">Humidity: {{ humidityText }}</span>%</li>
+        <li><span id="wind-speed">Wind Speed: {{ windSpeedText }}</span>mph</li>
       </ul>
     </div>
 
@@ -31,6 +34,7 @@
         <p>{{ forecast.conditionName }}</p>
         <p>Max: {{ forecast.maxTemp }}°F</p>
         <p>Min: {{ forecast.minTemp }}°F</p>
+        <img src="assets/icons/humidity.svg" alt="rainChance" width="32" height="32"><span id="humidity">{{ forecast.rainChance }}%</span>
       </div>
     </div>
   </div>

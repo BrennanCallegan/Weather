@@ -36,19 +36,18 @@
 
 .main-current-weather {
     display: flex;
-    flex-direction: row; /* Arrange children (.grid and .temperature-info) horizontally */
-    align-items: flex-start; /* Align items to the top (adjust to 'center' if desired) */
-    width: 100%; /* Ensure it takes full width within weather-details */
+    flex-direction: row;
+    align-items: flex-start; /* Align items to the top */
+    width: 100%; /* Ensure it takes full width of weather-details */
 }
 
 .grid {
-    display: flex; /* Keep your existing flex for internal layout */
+    display: flex;
     flex-direction: row;
-    padding: 0; /* Already correct from your CSS */
+    padding: 0;
     flex-shrink: 0; /* Prevents it from shrinking too much */
-    min-width: 250px; /* Ensure it has enough space. Adjust as needed. */
-    /* If you want the temperature/icon block to take up more space proportionally: */
-    /* flex: 2; */ 
+    min-width: 250px;
+    
 }
 
 .temperatureTxt{
@@ -69,34 +68,31 @@
 }
 
 .temperature-info {
-    font-size: 15px; /* Already correct from your CSS */
-    flex-shrink: 0; /* Prevents it from shrinking too much */
-    min-width: 200px; /* Ensure it has enough space. Adjust as needed. */
-    text-align: left; /* Ensure the list items align left if the parent has center/right */
-    /* If you want this block to take up less space proportionally: */
-    /* flex: 1; */
+    font-size: 15px;
+    flex-shrink: 0;
+    min-width: 200px;
+    text-align: left;
+    
 }
 
-/* Remove default list styling for .info if you haven't already */
 .temperature-info ul.info {
     list-style: none; /* Remove bullet points */
-    padding: 0;      /* Remove default left padding from ul */
-    margin: 0;       /* Remove default top/bottom margin from ul */
+    padding: 0;
+    margin: 0;
 }
 
 .temperature-info ul.info li {
-    margin-bottom: 5px; /* Add a small vertical gap between list items */
+    margin-bottom: 5px;
 }
 
 .rain-chance-display {
-    display: flex; /* Make it a flex container */
-    align-items: center; /* Vertically center the image and span */
+    display: flex;
+    align-items: center;
     gap: 5px; /* Add a small space between the icon and text */
 }
 
-/* Ensure the image is block-level for more precise alignment */
 .rain-chance-display img {
-    display: block;
+    display: block; /* Ensure the image is block-level for more precise alignment */
 }
 
 .temperature-icon{
@@ -109,25 +105,63 @@
     box-shadow: inset 2px 5px 10px #145a76;
     border-radius: 8px;
     padding: 15px;
+    
     display: flex;
     flex-direction: row;
-    white-space: nowrap;
-    position: relative;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
+    white-space: nowrap; /* Prevent cards from wrapping */
+    overflow-x: scroll; /* Enable horizontal scrolling */
+    overflow-y: hidden; /* Hide vertical overflow */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+    
+    gap: 15px; /* Add space between daily-weather cards */
 }
 
-.daily-cards div {
-    width: 24.5%;
-    background-color: #87ceeb;
-    float: none;
-    height: 90%;
-    margin: 0 0.25%;
-    display: inline-block;
-    zoom: 1;
+.daily-weather {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Distribute vertical space within the card */
+    
+    background-color: rgba(135, 206, 235, 0);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    
+    flex-shrink: 0; /* Prevent cards from shrinking */
+    flex-grow: 0; /* Prevent cards from growing */
+    flex-basis: 150px; /* Base width for each card. */
+    min-width: 150px; /* Ensure minimum width for the card */
 }
 
-.daily-weather{
-    padding: 25px;
+.daily-weather h3,
+.daily-weather p {
+    background-color: rgba(135, 206, 235, 0);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.daily-weather img {
+    background-color: rgba(135, 206, 235, 0);
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
+
+.daily-rain-chance {
+    background-color: rgba(135, 206, 235, 0);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.daily-rain-chance img {
+    display: block;
+}
+
+.daily-rain-chance span {
+    background-color: rgba(135, 206, 235, 0);
+    line-height: 1; /* Helps ensure the text aligns well with the image */
 }

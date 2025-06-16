@@ -104,30 +104,77 @@
 }
 
 .daily-cards{
-    width: 700px;
-    height: 400px;
+    /* Container for daily weather cards (the horizontal scroller) */
+    width: 700px; /* Fixed width for the scrollable area */
+    height: 400px; /* Fixed height for the scrollable area */
     box-shadow: inset 2px 5px 10px #145a76;
     border-radius: 8px;
-    padding: 15px;
-    display: flex;
-    flex-direction: row;
-    white-space: nowrap;
-    position: relative;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
+    padding: 15px; /* Padding inside the scrollable container */
+    
+    display: flex; /* Make it a flex container for the cards */
+    flex-direction: row; /* Arrange cards horizontally */
+    white-space: nowrap; /* Prevent cards from wrapping */
+    overflow-x: scroll; /* Enable horizontal scrolling */
+    overflow-y: hidden; /* Hide vertical overflow */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+    
+    gap: 15px; /* Add space between daily-weather cards */
 }
 
-.daily-cards div {
-    width: 24.5%;
-    background-color: #87ceeb;
-    float: none;
-    height: 90%;
-    margin: 0 0.25%;
-    display: inline-block;
-    zoom: 1;
+/* IMPORTANT: Apply styles for individual cards to .daily-weather, NOT .daily-cards div */
+.daily-weather {
+    /* Individual daily forecast card */
+    display: flex;          /* Make the card itself a flex container */
+    flex-direction: column; /* Stack contents (h3, img, p, daily-rain-chance) vertically */
+    align-items: center;    /* **Horizontally center all children** within the card */
+    justify-content: space-between; /* Distribute vertical space within the card */
+    
+    /* Sizing and appearance for each individual card */
+    background-color: rgba(135, 206, 235, 0);
+    border-radius: 8px; /* Match outer container's radius, or define separately */
+    padding: 15px; /* Padding for content *inside* each card */
+    text-align: center; /* Ensures text aligns centrally if not flex items */
+    
+    flex-shrink: 0; /* Prevent cards from shrinking */
+    flex-grow: 0; /* Prevent cards from growing */
+    flex-basis: 150px; /* Base width for each card. Adjust this to control how many fit. */
+    min-width: 150px; /* Ensure minimum width for the card */
+    
+    /* If you used margin on .daily-cards div previously, this handles spacing between cards */
+    /* margin: 0 0.25%; - This is handled by `gap` on .daily-cards */
 }
 
-.daily-weather{
-    padding: 25px;
+/* Remove default margins/padding from elements inside .daily-weather to control spacing precisely */
+.daily-weather h3,
+.daily-weather p {
+    background-color: rgba(135, 206, 235, 0);
+    margin: 0; /* Remove default margins */
+    padding: 0; /* Remove default padding */
+    text-align: center; /* Ensure text is centered */
+}
+
+.daily-weather img {
+    background-color: rgba(135, 206, 235, 0);
+    display: block; /* Ensures images behave well in flex container */
+    margin: 0 auto; /* Centers the image itself if it's narrower than its space */
+    margin-bottom: 5px; /* Space below the main weather icon */
+}
+
+/* Daily rain chance icon and percentage alignment */
+.daily-rain-chance {
+    background-color: rgba(135, 206, 235, 0);
+    display: flex;          /* Make it a flex container */
+    flex-direction: row;    /* **CRITICAL:** Arrange icon and span horizontally */
+    align-items: center;    /* Vertically center the image and span */
+    justify-content: center; /* Horizontally center the icon-percentage pair within its div */
+    gap: 5px;               /* Space between the icon and text */
+}
+
+.daily-rain-chance img {
+    display: block;
+}
+
+.daily-rain-chance span {
+    background-color: rgba(135, 206, 235, 0);
+    line-height: 1; /* Helps ensure the text aligns well with the image */
 }

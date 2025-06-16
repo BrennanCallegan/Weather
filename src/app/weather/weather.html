@@ -1,16 +1,18 @@
 <div class="container">
  <div class="header">
-  <div class="location-header">
-      <h2><span id="location">{{ locationText }}</span></h2>
-  </div>
-  <div class="search-bar">
-    <form #searchForm class="search-box" (ngSubmit)="onSubmit()">
-    <input placeholder="Location" class="input" name="location" type="text" id="location-input" [(ngModel)]="locationInputValue">
-    </form>
-  </div>
+    <!-- Displays location name and search bar -->
+    <div class="location-header">
+        <h2><span id="location">{{ locationText }}</span></h2>
+    </div>
+    <div class="search-bar">
+      <form #searchForm class="search-box" (ngSubmit)="onSubmit()">
+      <input placeholder="Location" class="input" name="location" type="text" id="location-input" [(ngModel)]="locationInputValue">
+      </form>
+    </div>
  </div>
 
   <div #weatherDetails class="weather-details">
+    <!--Displays current temperature, weather condition, and feels like temperature along with a corresponding icon-->
     <div class="main-current-weather"> 
       <div class="grid">
         <div class="temperature">
@@ -25,6 +27,7 @@
         </div>
       </div>
     </div>
+    <!--Displays additional info for current temperature like chance of rain, humidity, and wind speed-->
     <div class="current-additional">
       <div class="temperature-info">
         <div class="rain-chance-display">
@@ -40,6 +43,7 @@
 
     <h2>Daily Forecast</h2>
     <div #dailyForecastContainer class="daily-cards">
+      <!--Provides a seven day forecast-->
       <div class="daily-weather" *ngFor="let forecast of dailyForecasts">
         <h3>{{ forecast.time | date:'EEEE' }}</h3> <img [src]="forecast.iconSrc" alt="Daily Weather Icon" width="80" height="80">
         <p>{{ forecast.conditionName }}</p>

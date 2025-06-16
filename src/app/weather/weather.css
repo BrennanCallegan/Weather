@@ -69,7 +69,7 @@
 }
 
 .temperature-info {
-    font-size: 25px; /* Already correct from your CSS */
+    font-size: 15px; /* Already correct from your CSS */
     flex-shrink: 0; /* Prevents it from shrinking too much */
     min-width: 200px; /* Ensure it has enough space. Adjust as needed. */
     text-align: left; /* Ensure the list items align left if the parent has center/right */

@@ -1,0 +1,133 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 25px;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.location-header{
+    padding-left: 25px;
+    padding-right: 250px;
+}
+
+.search-bar{
+    padding-left: 100px;
+}
+
+.input {
+  margin: 30px;
+  background: none;
+  border: none;
+  outline: none;
+  max-width: 190px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 9999px;
+  box-shadow: inset 2px 5px 10px #145a76;
+  color: #fff;
+}
+
+.main-current-weather {
+    display: flex;
+    flex-direction: row; /* Arrange children (.grid and .temperature-info) horizontally */
+    align-items: flex-start; /* Align items to the top (adjust to 'center' if desired) */
+    width: 100%; /* Ensure it takes full width within weather-details */
+}
+
+.grid {
+    display: flex; /* Keep your existing flex for internal layout */
+    flex-direction: row;
+    padding: 0; /* Already correct from your CSS */
+    flex-shrink: 0; /* Prevents it from shrinking too much */
+    min-width: 250px; /* Ensure it has enough space. Adjust as needed. */
+    /* If you want the temperature/icon block to take up more space proportionally: */
+    /* flex: 2; */ 
+}
+
+.temperatureTxt{
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.temperature{
+    font-size: 37px;
+}
+
+.temperature p {
+    margin: 0; /* This will remove all default top and bottom margins from the paragraphs */
+}
+
+.current-additional{
+    margin-bottom: 40px;
+}
+
+.temperature-info {
+    font-size: 15px; /* Already correct from your CSS */
+    flex-shrink: 0; /* Prevents it from shrinking too much */
+    min-width: 200px; /* Ensure it has enough space. Adjust as needed. */
+    text-align: left; /* Ensure the list items align left if the parent has center/right */
+    /* If you want this block to take up less space proportionally: */
+    /* flex: 1; */
+}
+
+/* Remove default list styling for .info if you haven't already */
+.temperature-info ul.info {
+    list-style: none; /* Remove bullet points */
+    padding: 0;      /* Remove default left padding from ul */
+    margin: 0;       /* Remove default top/bottom margin from ul */
+}
+
+.temperature-info ul.info li {
+    margin-bottom: 5px; /* Add a small vertical gap between list items */
+}
+
+.rain-chance-display {
+    display: flex; /* Make it a flex container */
+    align-items: center; /* Vertically center the image and span */
+    gap: 5px; /* Add a small space between the icon and text */
+}
+
+/* Ensure the image is block-level for more precise alignment */
+.rain-chance-display img {
+    display: block;
+}
+
+.temperature-icon{
+    padding-left: 250px;
+}
+
+.daily-cards{
+    width: 700px;
+    height: 400px;
+    box-shadow: inset 2px 5px 10px #145a76;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.daily-cards div {
+    width: 24.5%;
+    background-color: #87ceeb;
+    float: none;
+    height: 90%;
+    margin: 0 0.25%;
+    display: inline-block;
+    zoom: 1;
+}
+
+.daily-weather{
+    padding: 25px;
+}
